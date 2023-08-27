@@ -61,7 +61,7 @@ export default class Compiler extends Component {
         headers: {
           "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
           "x-rapidapi-key":
-            "a5d4bb009cmsh85b0c91a6bf9601p1e7b52jsn6b3ecc68eb75", // Get yours for free at https://rapidapi.com/judge0-official/api/judge0-ce/
+            "", // Get yours for free at https://rapidapi.com/judge0-official/api/judge0-ce/
           "content-type": "application/json",
           accept: "application/json",
         },
@@ -98,7 +98,7 @@ export default class Compiler extends Component {
           headers: {
             "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
             "x-rapidapi-key":
-              "a5d4bb009cmsh85b0c91a6bf9601p1e7b52jsn6b3ecc68eb75", // Get yours for free at https://rapidapi.com/judge0-official/api/judge0-ce/
+              "", // Get yours for free at https://rapidapi.com/judge0-official/api/judge0-ce/
             "content-type": "application/json",
           },
         })
