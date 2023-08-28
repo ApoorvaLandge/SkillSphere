@@ -18,6 +18,8 @@ import UserProvider from "./context/UserProvider"
 import Categories from "./pages/Categories"
 import UpdateBlog from "./pages/UpdateBlog"
 import Complier from "./Complier/Complier"
+import CardButton from "./intermediate/CardButton"
+import TwoButton from "./intermediate/TwoButton"
 
 function App() {
   return (
@@ -40,6 +42,7 @@ function App() {
           </Route>
 
           <Route path="/complier" element={<Complier />}></Route>
+          <Route path="/card" element={<TwoButton />}></Route>
         </Routes>
       </BrowserRouter>
     </UserProvider>

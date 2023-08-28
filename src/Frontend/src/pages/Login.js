@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { useState } from "react"
+import { toast } from "react-toastify"
+import ReCAPTCHA from "react-google-recaptcha"
 import {
   Label,
   Card,
@@ -12,78 +13,84 @@ import {
   Input,
   Row,
   Button,
-} from "reactstrap";
-import Base from "../components/Base";
-import { loginUser } from "../services/user-service";
-import { doLogin } from "../auth";
-import { useNavigate } from "react-router-dom";
-import userContext from "../context/userContext";
-import { useContext } from "react";
+} from "reactstrap"
+import Base from "../components/Base"
+import { loginUser } from "../services/user-service"
+import { doLogin } from "../auth"
+import { useNavigate } from "react-router-dom"
+import userContext from "../context/userContext"
+import { useContext } from "react"
 
 const Login = () => {
-  const userContxtData = useContext(userContext);
+  const userContxtData = useContext(userContext)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const [isCaptchaSuccessful, setIsCaptchaSuccess] = useState(false)
 
   const [loginDetail, setLoginDetail] = useState({
     username: "",
     password: "",
-  });
+  })
 
   const handleChange = (event, field) => {
-    let actualValue = event.target.value;
+    let actualValue = event.target.value
     setLoginDetail({
       ...loginDetail,
       [field]: actualValue,
-    });
-  };
+    })
+  }
+
+  function onChange(value) {
+    setIsCaptchaSuccess(true)
+    console.log("captcha value: ", value)
+  }
 
   const handleReset = () => {
     setLoginDetail({
       username: "",
       password: "",
-    });
-  };
+    })
+  }
 
   const handleFormSubmit = (event) => {
-    event.preventDefault();
-    console.log(loginDetail);
+    event.preventDefault()
+    console.log(loginDetail)
     //validation
     if (
       loginDetail.username.trim() == "" ||
       loginDetail.password.trim() == ""
     ) {
-      toast.error("Username or Password  is required !!");
-      return;
+      toast.error("Username or Password  is required !!")
+      return
     }
 
     //submit the data to server to generate token
     loginUser(loginDetail)
       .then((data) => {
-        console.log(data);
+        console.log(data)
 
         //save the data to localstorage
         doLogin(data, () => {
-          console.log("login detail is saved to localstorage");
+          console.log("login detail is saved to localstorage")
           //redirect to user dashboard page
           userContxtData.setUser({
             data: data.user,
             login: true,
-          });
-          navigate("/user/dashboard");
-        });
+          })
+          navigate("/card")
+        })
 
-        toast.success("Login Success");
+        toast.success("Login Success")
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
         if (error.response.status == 400 || error.response.status == 404) {
-          toast.error(error.response.data.message);
+          toast.error(error.response.data.message)
         } else {
-          toast.error("Something went wrong  on sever !!");
+          toast.error("Something went wrong  on sever !!")
         }
-      });
-  };
+      })
+  }
 
   return (
     <Base>
@@ -126,8 +133,21 @@ const Login = () => {
                     />
                   </FormGroup>
 
+                  <br></br>
+                  <ReCAPTCHA
+                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                    onChange={onChange}
+                  />
+
+                  <br></br>
+                  <br></br>
+
                   <Container className="text-center">
-                    <Button color="light" outline>
+                    <Button
+                      color="light"
+                      outline
+                      disabled={!isCaptchaSuccessful}
+                    >
                       Login
                     </Button>
                     <Button
@@ -146,7 +166,7 @@ const Login = () => {
         </Row>
       </Container>
     </Base>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

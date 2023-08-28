@@ -1,7 +1,9 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { signUp } from "../services/user-service";
-import { toast } from "react-toastify";
+import { useEffect } from "react"
+import { useState } from "react"
+import { signUp } from "../services/user-service"
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router-dom"
+
 import {
   Button,
   Card,
@@ -15,26 +17,29 @@ import {
   Input,
   Label,
   Row,
-} from "reactstrap";
-import Base from "../components/Base";
+} from "reactstrap"
+import Base from "../components/Base"
+
 const Signup = () => {
+  const navigate = useNavigate()
+
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
     about: "",
-  });
+  })
 
   const [error, setError] = useState({
     errors: {},
     isError: false,
-  });
+  })
 
   // handle change
   const handleChange = (event, property) => {
     //dynamic setting the values
-    setData({ ...data, [property]: event.target.value });
-  };
+    setData({ ...data, [property]: event.target.value })
+  }
 
   //reseting the form
   const resetData = () => {
@@ -43,12 +48,12 @@ const Signup = () => {
       email: "",
       password: "",
       about: "",
-    });
-  };
+    })
+  }
 
   //submit the form
   const submitForm = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     // if(error.isError){
     //   toast.error("Form data is invalid , correct all details then submit. ");
@@ -56,32 +61,33 @@ const Signup = () => {
     //   return;
     // }
 
-    console.log(data);
+    console.log(data)
     //data validate
 
     //call server api for sending data
     signUp(data)
       .then((resp) => {
-        console.log(resp);
-        console.log("success log");
-        toast.success("User is registered successfully !! user id " + resp.id);
+        console.log(resp)
+        console.log("success log")
+        toast.success("User is registered successfully !! user id " + resp.id)
+        navigate("/login")
         setData({
           name: "",
           email: "",
           password: "",
           about: "",
-        });
+        })
       })
       .catch((error) => {
-        console.log(error);
-        console.log("Error log");
+        console.log(error)
+        console.log("Error log")
         //handle errors in proper way
         setError({
           errors: error,
           isError: true,
-        });
-      });
-  };
+        })
+      })
+  }
 
   return (
     <Base>
@@ -196,7 +202,7 @@ const Signup = () => {
         </Row>
       </Container>
     </Base>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup

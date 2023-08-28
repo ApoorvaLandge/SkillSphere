@@ -7,7 +7,7 @@ const About = () => {
       {(object) => (
         <Base>
           <h1>
-            tThe purpose of the EdTech Articles and Coding Compiler Platform is
+            The purpose of the EdTech Articles and Coding Compiler Platform is
             to create a comprehensive and interactive web-based application that
             caters to the needs of software enthusiasts, developers, and
             learners. The platform offers a space for users to share their

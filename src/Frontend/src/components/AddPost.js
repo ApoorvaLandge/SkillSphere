@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import {
   Card,
   CardBody,
@@ -19,6 +20,7 @@ import {
 import { getCurrentUserDetail } from "../auth"
 import { toast } from "react-toastify"
 const AddPost = () => {
+  const navigate = useNavigate()
   const editor = useRef(null)
   // const [content,setContent] =useState('')
   const [categories, setCategories] = useState([])
@@ -86,6 +88,7 @@ const AddPost = () => {
         uploadPostImage(image, data.postId)
           .then((data) => {
             toast.success("Image Uploaded !!")
+            navigate("/")
           })
           .catch((error) => {
             toast.error("Error in uploading image")
